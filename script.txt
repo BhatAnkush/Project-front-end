@@ -1,0 +1,46 @@
+function signup() {
+    var username = document.getElementById("signupUsername").value;
+    var password = document.getElementById("signupPassword").value;
+
+    // Check if username already exists
+    if (localStorage.getItem(username) !== null) {
+        alert("Username already exists. Please choose another one.");
+        return;
+    }
+
+    // Store user details as a JSON object
+    var userDetails = {
+        username: username,
+        password: password
+    };
+
+    // Store user details in local storage
+    localStorage.setItem(username, JSON.stringify(userDetails));
+
+    alert("Signup successful!");
+    document.getElementById("signupForm").reset();
+}
+
+function login() {
+    var username = document.getElementById("loginUsername").value;
+    var password = document.getElementById("loginPassword").value;
+
+    // Retrieve user details from local storage
+    var userDetailsString = localStorage.getItem(username);
+
+    // Check if userDetailsString exists and parse it into an object
+    if (userDetailsString !== null) {
+        var userDetails = JSON.parse(userDetailsString);
+
+        // Check if entered password matches stored password
+        if (userDetails.password === password) {
+            alert("Login successful!");
+            window.location.href = 'index1.html'
+            document.getElementById("loginForm").reset();
+        } else {
+            alert("Incorrect password. Please try again.");
+        }
+    } else {
+        alert("Username not found. Please sign up.");
+    }
+}
